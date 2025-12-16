@@ -1,3 +1,17 @@
+const endpoint = process.env.QUICKNODE_WSS;
+
+if (!endpoint) {
+  console.error("❌ QUICKNODE_WSS non défini !");
+  process.exit(1);
+}
+
+if (!endpoint.startsWith("wss://") && !endpoint.startsWith("http://") && !endpoint.startsWith("https://")) {
+  console.error("❌ QUICKNODE_WSS invalide :", endpoint);
+  process.exit(1);
+}
+
+const connection = new Connection(endpoint, { commitment: "processed" });
+
 import { Connection, PublicKey } from "@solana/web3.js";
 
 export function listenWallet(wallet: string) {
