@@ -1,0 +1,4 @@
+export const LIMITS = {
+  MAX_SOL_PER_TRADE: 0.3,
+  MAX_TRADES_PER_DAY: 20
+};
