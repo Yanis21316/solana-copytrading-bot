@@ -1,21 +1,35 @@
-import { ledger } from "../pnl/ledger.js";
-import { Connection, PublicKey, ParsedTransactionWithMeta } from "@solana/web3.js";
+import { ledger, Trade } from "../pnl/ledger.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 
 export function listenWallet(wallet: string) {
   const endpoint = process.env.QUICKNODE_WSS!;
+  if (!endpoint) {
+    console.error("❌ QUICKNODE_WSS non défini !");
+    process.exit(1);
+  }
+
+  if (!endpoint.startsWith("wss://") && !endpoint.startsWith("http://") && !endpoint.startsWith("https://")) {
+    console.error("❌ QUICKNODE_WSS invalide :", endpoint);
+    process.exit(1);
+  }
+
+  console.log("✅ QUICKNODE_WSS détecté :", endpoint);
+
   const connection = new Connection(endpoint, { commitment: "processed" });
   const pubkey = new PublicKey(wallet);
 
   connection.onLogs(pubkey, async (logs) => {
     if (!logs.signature) return;
 
-    // Simule un trade détecté
-    const trade = {
-      mint: "ABC", // Simulé
-      side: Math.random() > 0.5 ? "BUY" : "SELL",
+    // Simulation d’un trade détecté
+    const side: "BUY" | "SELL" = Math.random() > 0.5 ? "BUY" : "SELL";
+
+    const trade: Trade = {
+      mint: "ABC",
+      side,
       sizeSol: 0.1,
-      price: Math.random() * 0.01,
-      pnl: Math.random() * 0.001,
+      price: parseFloat((Math.random() * 0.01).toFixed(6)),
+      pnl: parseFloat((Math.random() * 0.001).toFixed(6)),
       timestamp: Date.now()
     };
 
