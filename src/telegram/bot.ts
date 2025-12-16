@@ -31,7 +31,7 @@ bot.onText(/\/lasttrade/, (msg) => {
   if (!trade) return bot.sendMessage(msg.chat.id, "Aucun trade détecté.");
   bot.sendMessage(
     msg.chat.id,
-    `📝 Dernier trade : ${trade.side} ${trade.sizeSol} SOL ${trade.mint} à $${trade.price.toFixed(6)}`
+    `📝 Dernier trade : ${trade.side} ${trade.sizeSol} SOL ${trade.mint} à $${trade.price}`
   );
 });
 
