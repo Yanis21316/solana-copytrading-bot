@@ -3,6 +3,7 @@ import { listenWallet } from "./core/listener/wssListener.js";
 
 console.log("🚀 SOLANA COPY TRADING BOT STARTED");
 
+// Vérification variables
 const vars = ["MASTER_WALLET","TG_TOKEN","CHAT_ID","QUICKNODE_WSS"];
 vars.forEach(v => {
   if (!process.env[v]) {
@@ -14,5 +15,5 @@ vars.forEach(v => {
 // Test Telegram
 bot.sendMessage(process.env.CHAT_ID!, "✅ Bot connecté et prêt !");
 
-// Démarre l'écoute du wallet
+// Démarrer l'écoute du wallet
 listenWallet(process.env.MASTER_WALLET!);
