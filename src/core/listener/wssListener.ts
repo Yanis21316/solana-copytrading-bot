@@ -21,7 +21,6 @@ export function listenWallet(wallet: string) {
   connection.onLogs(pubkey, async (logs) => {
     if (!logs.signature) return;
 
-    // Simulation d’un trade détecté
     const side: "BUY" | "SELL" = Math.random() > 0.5 ? "BUY" : "SELL";
 
     const trade: Trade = {
