@@ -1,4 +1,4 @@
-type Trade = {
+export type Trade = {
   mint: string;
   side: "BUY" | "SELL";
   sizeSol: number;
@@ -16,16 +16,15 @@ export const ledger = {
     if (!this.wallets.includes(trade.mint)) this.wallets.push(trade.mint);
   },
 
-  getLastTrade() {
-    return this.trades[this.trades.length - 1];
+  getLastTrade(): Trade | null {
+    return this.trades[this.trades.length - 1] || null;
   },
 
-  getPNL() {
-    const totalPNL = this.trades.reduce((acc, t) => acc + t.pnl, 0);
-    return totalPNL;
+  getPNL(): number {
+    return this.trades.reduce((acc, t) => acc + t.pnl, 0);
   },
 
-  getWallets() {
+  getWallets(): string[] {
     return this.wallets;
   }
 };
